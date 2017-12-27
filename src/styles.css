@@ -1,0 +1,111 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.bg-custom-blue {
+  background-color: #007bff;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.alert p {
+    margin: 0;
+    padding: 0;
+}
+
+.no-padding {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+.overflow-visible {
+  overflow: visible !important;
+}
+
+.alert {
+  height: 60px;
+}
+
+.multiselect {
+  display: block;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.25;
+  color: #495057;
+  background-color: #fff;
+  background-image: none;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #007bff;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    margin: auto;
+  }
+
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+.table th,td {
+  text-align: center;
+}
+
+/* Mat table */
+
+.mat-table-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.mat-filter-container {
+  min-height: 64px;
+  padding: 8px 20px 0;
+}
+
+.mat-form-field {
+  font-size: 14px;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+.mat-filter {
+  width: 100%;
+  margin: 0px, 20px;
+}
+
+.mat-header-row {
+  background-color: rgb(250,250,250);
+}
+
+.mat-paginator-container {
+  background-color: rgb(250,250,250);
+}
+
+/* Font awesome */
+
+.fa-medkit {
+  margin-right: 5px;
+}

@@ -1,0 +1,164 @@
+
+<div *ngIf="followupId" class="row">
+  <div class="col">
+    <a [routerLink]="['/patient/'+patientId+'/followup/'+followupId]" href="#" class="btn btn-link">
+      <i class="fa fa-arrow-circle-o-left"></i> Back to Follow-up detail
+    </a>
+  </div>
+</div>
+
+<br>
+
+<!-- Form -->
+<div class="card">
+  <div class="card-header">
+    <b>Followup</b>
+  </div>
+  <div class="card-body">
+    <form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)">
+
+      <!-- Types Field -->
+      <div class="form-group">
+        <label><b>Type*</b></label>
+        <br>
+        <div class="form-check form-check-inline" *ngFor="let type of types">
+          <label class="form-check-label">
+            <input 
+            type="radio"
+            class="form-check-input"
+            name="type"
+            [(ngModel)]="followup.type"
+            #types = "ngModel"
+            [value]="type"
+            required
+            >
+            {{ type }}
+          </label>
+        </div>
+        <div class="invalid-feedback" >
+          <div *ngIf="types?.errors?.required">Type is required</div>
+        </div>
+      </div>
+
+      <!-- Date Field -->
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Choose a date" name="date" [(ngModel)]="followup.date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker touchUi="true"></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <!-- Name Field -->
+      <div class="form-group">
+        <label for="name"><b>Title*</b></label>
+        <input 
+        type="text"
+        class="form-control"
+        [ngClass]="{'is-invalid': name.errors?.required && name.touched || name.errors?.minlength }"
+        #name = "ngModel"
+        id="name"
+        [(ngModel)]="followup.name"
+        name="name"
+        minlength="2"
+        required
+        >
+        <div class="invalid-feedback" >
+          <div *ngIf="name?.errors?.required && name.touched">Name is required</div>
+          <div *ngIf="name?.errors?.minlength && name.touched">Must be at least 2 characters</div>
+        </div>
+      </div>  
+
+      <!-- Content Field -->
+      <div class="form-group">
+      <label for="content"><b>Content*</b></label>
+        <textarea 
+        id="content"
+        rows="5"
+        class="form-control"
+        name="content"
+        [ngClass]="{'is-invalid': content.errors?.required && content.touched}" 
+        [(ngModel)]="followup.content"
+        #content="ngModel"
+        minlength="10"
+        required
+        ></textarea>
+        <div class="invalid-feedback d-block" >
+          <div *ngIf="content?.errors?.required && content.touched">Content is required</div>
+          <div *ngIf="content?.errors?.minlength && content.touched">Must be at least 10 characters</div>
+        </div>
+      </div>
+
+      <!-- Notif Field -->
+      <div class="form-group">
+        <label for="alert"><b>Alert*</b></label>
+        <br>
+        <div class="form-check form-check-inline">
+          <label class="form-check-label">
+            <input 
+            type="radio" 
+            class="form-check-input"
+            name="alert"
+            [(ngModel)]="followup.alert"
+            [value]="true"
+            required
+            >
+          True
+          </label>
+          <label class="form-check-label">
+            <input 
+            type="radio" 
+            class="form-check-input"
+            name="alert"
+            [(ngModel)]="followup.alert"
+            [value]="false"
+            required
+            >
+          False
+          </label>
+        </div>
+      </div>
+
+      <!-- Upload Field -->
+      <div class="form-group">
+        <label for="upload"><b>Upload (optional)</b></label>
+        <br>
+        <div class="container">
+          <div class="row">
+            <label class="custom-file">
+              <input 
+              type="file" 
+              id="file" 
+              name="file" 
+              class="custom-file-input"
+              (change)="detectFiles($event)" 
+              multiple
+              [disabled]="followupId ? true : false"
+              >
+              <span class="custom-file-control" [ngStyle]="{'background-color': followupId ? '#e9ecef' : ''}"></span>
+            </label>
+          </div>
+          <br>
+          <div class="row" *ngIf="selectedFiles">
+            <ul>
+              <li *ngFor="let file of selectedFiles">{{ file.name }}  <b>({{ file.size /1000 | number: '1.0-0' }} kb)</b></li>
+            </ul>
+          </div>
+        </div>
+
+        <br>
+
+        <div *ngIf="currentUpload">
+          <div class="progress">
+            <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': currentUpload?.progress + '%' }"></div>
+          </div>
+          Progress: {{currentUpload?.name}} | {{currentUpload?.progress}}% Complete
+        </div>
+      </div> 
+
+      <!-- Submit Button  -->
+      <input type="submit" value="Submit" class="btn btn-primary btn-block">
+    </form>
+  </div>
+</div>
+<br><br><br>

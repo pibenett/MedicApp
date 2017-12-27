@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col">
+    <a *ngIf="returnUrl" [routerLink]="['/'+returnUrl]" href="#" class="btn btn-link">
+      <i class="fa fa-arrow-circle-o-left"></i> Back to Notifications
+    </a>
+    <a *ngIf="!returnUrl" [routerLink]="['/patient/'+patientId+'/followup']" href="#" class="btn btn-link">
+      <i class="fa fa-arrow-circle-o-left"></i> Back to Follow-ups
+    </a>
+  </div>
+</div>
+
+<br>
+
+<ng-container *ngIf="followup$?.content; then followupDetail else: noFollowup"></ng-container>
+
+<ng-template #followupDetail> 
+  <div class="card">
+    <div class="container">
+      <div class="row card-header">
+        <div class="col-md-8"> <h3>{{ followup$.type }}</h3></div>
+        <div class="col-md-4">
+          <div class="btn-group pull-right">
+            <a [routerLink] = "['/patient/'+patientId+'/followup/edit/'+followupId]" class="btn btn-dark">Edit</a>
+            <button class="btn btn-danger" (click)="onDeleteClick()">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <br>
+    
+    <div class="card-body">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><b>Date: </b>{{ followup$.date | date: 'dd/MM/yyyy' }}</li>
+        <li class="list-group-item"><b>Name: </b>{{ followup$.name }}</li>
+        <li class="list-group-item"><b>Content: </b>{{ followup$.content }}</li>
+        <li class="list-group-item"><b>Alert: </b>{{ followup$.alert }}</li>
+        <li class="list-group-item"><b>Attached files: </b>
+        <br><br>
+          <mat-grid-list cols="2" rowHeight="2:1">
+              <mat-grid-tile *ngFor="let upload of followup$.uploads"><a [href]="upload.url"><img [src]="upload.url" [alt]="upload.name"></a> </mat-grid-tile>
+          </mat-grid-list>
+        </li>
+      </ul>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noFollowup >
+  <div class="container">
+    <div class="row align-items-center" style="height:50vh">
+      <div class="col">
+        <mat-spinner class="m-auto"></mat-spinner>
+      </div>
+    </div>
+  </div>
+</ng-template>

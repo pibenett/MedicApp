@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col">
+    <a routerLink="/" href="#" class="btn btn-link">
+      <i class="fa fa-arrow-circle-o-left"></i> Back to Dashboard
+    </a>
+  </div>
+</div>
+  
+<br>
+
+<ng-container *ngIf="patient$">
+  <div class="card">
+    <div class="container">
+      <div class="row card-header">
+        <div class="col-md-8"> <h3>{{ patient$.firstName }}  {{ patient$.lastName }}</h3></div>
+        <div class="col-md-4">
+          <div class="btn-group pull-right">
+            <a [routerLink] = "['/patient-form/' + patientId]" href="#" class="btn btn-dark">Edit</a>
+            <button class="btn btn-danger" (click)="onDeleteClick()">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+        
+    <br>
+
+    <div class="card-body">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><b>Gender: </b>{{ patient$.gender }}</li>
+        <li class="list-group-item"><b>Birthdate: </b>{{ patient$.birthdate | date: 'dd/MM/yyyy' }}</li>
+        <li class="list-group-item"><b>Phone: </b>{{ patient$.phone }}</li>
+        <li class="list-group-item"><b>Email: </b>{{ patient$.email }}</li>
+        <li class="list-group-item"><b>Address: </b>{{ patient$.address.street }}, {{ patient$.address.postalCode }}, {{ patient$.address.city }}</li>
+        <li class="list-group-item"><b>Allergies:</b>
+          <ul>
+          <li *ngFor="let allergie of patient$.allergies">
+          {{ allergie.itemName }}
+          </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</ng-container>

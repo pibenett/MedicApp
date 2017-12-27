@@ -1,0 +1,40 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-custom-blue">
+  <div class="container">
+    
+    <!-- App logo -->
+    <a class="navbar-brand" href="/"><i class="fa fa-medkit" aria-hidden="true"></i> MedicApp </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Login & Register if user not logged in -->
+    <div class="collapse navbar-collapse">
+      <ul *ngIf="!isLoggedIn" class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/register">Register</a>
+        </li>
+      </ul>
+
+      <!-- Username, Logout and Notifs if user logged in -->
+      <ul *ngIf="isLoggedIn && loggedUser" class="navbar-nav ml-auto">
+        <li *ngIf="isLoggedIn" class="nav-item">
+          <a class="nav-link">{{ loggedUser?.firstName + ' ' + loggedUser?.lastName }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/login" (click)="onLogoutClick()">Logout</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="[userId + '/notifications']">
+            <span><i class="fa fa-bell-o" aria-hidden="true"></i></span>
+            <span *ngIf="notifCounter" class="badge badge-pill badge-warning">{{ notifCounter }}</span>
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</nav>
+<br><br>

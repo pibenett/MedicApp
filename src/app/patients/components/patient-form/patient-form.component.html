@@ -1,0 +1,184 @@
+
+<div class="row">
+  <div class="col-md-6">
+    <a routerLink="/" href="#" class="btn btn-link">
+      <i class="fa fa-arrow-circle-o-left"></i> Back to Dashboard
+    </a>
+  </div>
+  <div class="col-md-6">
+  </div>
+</div>
+
+<br>
+
+<!-- Form -->
+<div class="card">
+  <div class="card-header">
+    Patient
+  </div>
+  <div class="card-body">
+    <form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)">
+
+      <!-- First Name Field -->
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input 
+        class="form-control"
+        [ngClass]="{'is-invalid' :firstName.errors?.required && firstName.touched || firstName.errors?.minlength }"
+        type="text"
+        id="firstName"
+        [(ngModel)]="patient.firstName"
+        name="firstName"
+        #firstName = "ngModel"
+        minlength="2"
+        required
+        >
+        <div class="invalid-feedback" >
+          <div *ngIf="firstName?.errors?.required && firstName.touched">First name is required</div>
+          <div *ngIf="firstName?.errors?.minlength && firstName.touched">Must be at least 2 characters</div>
+        </div>
+      </div>  
+
+      <!-- Last Name Field -->
+      <div class="form-group">
+          <label for="lastName">First Name</label>
+          <input 
+          class="form-control"
+          [ngClass]="{'is-invalid' :lastName.errors?.required && lastName.touched || lastName.errors?.minlength }"
+          type="text"
+          id="lastName"
+          [(ngModel)]="patient.lastName"
+          name="lastName"
+          #lastName = "ngModel"
+          minlength="2"
+          required
+          >
+          <div class="invalid-feedback" >
+            <div *ngIf="lastName?.errors?.required && lastName.touched">Last name is required</div>
+            <div *ngIf="lastName?.errors?.minlength && lastName.touched">Must be at least 2 characters</div>
+          </div>
+        </div>  
+
+       <!-- Gender Field -->
+       <div class="form-group">
+        <div class="form-check form-check-inline" *ngFor="let gender of genders">
+          <label class="form-check-label">
+            <input 
+            type="radio" 
+            class="form-check-input" 
+            name="gender"
+            [(ngModel)]="patient.gender"
+            [value]="gender"
+            >
+          {{ gender }}
+          </label>
+        </div>
+      </div>
+      
+      <!-- Birthdate Field -->
+      <div class="form-group">
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Choose a birthdate" name="birthdate" [(ngModel)]="patient.birthdate" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker touchUi="true"></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <!-- Email Field -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <div class="input-group">
+          <span class="input-group-addon">@</span>
+          <input 
+          class="form-control"
+          [ngClass]="{'is-invalid' :patientEmail.errors?.required && patientEmail.touched || patientEmail.errors?.pattern }"
+          type="text"
+          id="email"
+          [(ngModel)]="patient.email"
+          name="email"
+          #patientEmail="ngModel"
+          minlength="2"
+          pattern= "^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+          required
+          >
+        </div>
+        <div class="invalid-feedback d-block" >
+          <div *ngIf="patientEmail?.errors?.required && patientEmail.touched">Email is required</div>
+          <div *ngIf="patientEmail?.errors?.pattern && patientEmail.touched">Invalid email</div>
+        </div>
+      </div>
+
+      <!-- Phone Field -->
+      <div class="form-group">
+        <label for="phone">Phone</label>
+        <input 
+        class="form-control"
+        type="number"
+        [ngClass]="{'is-invalid' :patientPhone.errors?.required && patientPhone.touched || patientPhone.errors?.minlength }"
+        id="phone"
+        [(ngModel)]="patient.phone"
+        name="phone"
+        #patientPhone="ngModel"
+        min="0"
+        required
+        >
+        <div class="invalid-feedback" >
+            <div *ngIf="patientPhone?.errors?.required && patientPhone.touched">Phone is required</div>
+        </div>
+      </div>
+
+      <!-- Address field  -->
+      <div class="form-group" ngModelGroup="address">
+        <label>Address: </label>
+        <br>
+        <input 
+        class="form-control" 
+        type="text" 
+        placeholder="Number and street"
+        [(ngModel)]="patient.address.street"
+        name="street"
+        >
+        <br>
+        <div class="row">
+          <div class="col-6">
+            <input
+            class="form-control"
+            type="text"
+            placeholder="Postal code"
+            [(ngModel)]="patient.address.postalCode"
+            name="postalCode"
+            >
+          </div>
+          <div class="col-6">
+            <input 
+            class="form-control"
+            type="text"
+            placeholder="City"
+            [(ngModel)]="patient.address.city"
+            name="city"
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Allergies Field -->
+      <div class="form-group">
+        <label for="allergies">Allergies:</label>
+        <br>
+        <angular2-multiselect 
+        class="form-control" 
+        [data]="allergies" 
+        [(ngModel)]="patient.allergies" 
+        name="allergies" 
+        [settings]="dropdownSettings" 
+        [selectedItems]="patient.allergies">
+        </angular2-multiselect>
+      </div>     
+
+      <!-- Submit Button  -->
+      <input type="submit" value="Submit" class="btn btn-primary btn-block">
+    </form>
+  </div>
+</div>
+
+

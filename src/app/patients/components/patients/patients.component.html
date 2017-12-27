@@ -1,0 +1,85 @@
+
+<a routerLink="/patient-form" class="btn btn-sm btn-primary">
+  <i class="fa fa-user-plus" aria-hidden="true"></i> New patient
+</a>
+
+<br><br>
+
+<ng-container *ngIf="patients; then patientsList else: noPatients"></ng-container>
+
+<ng-template #patientsList>
+  <div class="mat-elevation-z1">
+
+    <!-- Filter -->
+    <div class="mat-filter-container">
+      <mat-form-field class="mat-filter">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+    </div>
+
+    <br>
+
+    <!-- Table -->
+    <div class="mat-table-container">
+      <mat-table [dataSource]="patients" matSort>
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="firstName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+          <mat-cell *matCellDef="let patient"> {{patient.firstName}} </mat-cell>
+        </ng-container>
+
+        <!-- Last Name Column -->
+        <ng-container matColumnDef="lastName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+          <mat-cell *matCellDef="let patient"> {{patient.lastName}} </mat-cell>
+        </ng-container>
+
+        <!-- Gender Column -->
+        <ng-container matColumnDef="gender">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Gender </mat-header-cell>
+          <mat-cell *matCellDef="let patient"> {{patient.gender}} </mat-cell>
+        </ng-container>
+
+        <!-- Birthdate Column -->
+        <ng-container matColumnDef="birthdate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Birthdate </mat-header-cell>
+          <mat-cell *matCellDef="let patient"> {{patient.birthdate | date: 'dd/MM/yyyy'}} </mat-cell>
+        </ng-container>
+
+        <!-- Age Column -->
+        <ng-container matColumnDef="age">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Age </mat-header-cell>
+          <mat-cell *matCellDef="let patient"> {{patient.age }} </mat-cell>
+        </ng-container>
+
+        <!-- Links Column -->
+        <ng-container matColumnDef="links">
+          <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+          <mat-cell class="btn-group overflow-visible" *matCellDef="let patient">
+            <a [routerLink]="['/patient/'+patient.key]" href="#" class="btn btn-outline-secondary btn-sm"><i class="fa fa-arrow-circle-o-right"></i>
+            Details</a>
+            <a [routerLink]="['/patient/'+patient.key+'/followup']" class="btn btn-outline-info btn-sm"><i class="fa fa-asterisk"></i>
+            Follow-ups</a>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
+      <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noPatients >
+  <div class="container">
+    <div class="row align-items-center" style="height:50vh">
+      <div class="col">
+        <mat-spinner class="m-auto"></mat-spinner>
+      </div>
+    </div>
+  </div>
+</ng-template>
+      

@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="col-md-7 mx-auto">
+    <div class="card">
+      <div class="card-body">
+
+        <!-- Register form -->
+        <h1 class="text-center">Register</h1>
+        <form novalidate #f="ngForm" (submit)="onSubmit(f)">
+
+          <!-- First name field -->
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input 
+            type="text" 
+            class="form-control" 
+            [(ngModel)]="firstName"
+            name="firstName"
+            minlength="2"
+            required
+            (keyup)="firstCharToUppercase($event.target)"
+            >
+          </div>
+
+          <!-- Last name field -->
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input 
+            type="text" 
+            class="form-control" 
+            [(ngModel)]="lastName"
+            name="lastName"
+            minlength="2"
+            required
+            (keyup)="firstCharToUppercase($event.target)"
+            >
+          </div>
+
+          <!-- Email field -->
+          <div class="form-group">
+            <label for="email">Email</label>
+            <div class="input-group">
+              <span class="input-group-addon">@</span>
+              <input 
+              class="form-control"
+              [ngClass]="{'is-invalid' :userEmail.errors?.required && userEmail.touched || userEmail.errors?.pattern }"
+              type="text"
+              [(ngModel)]="email"
+              name="email"
+              #userEmail = "ngModel"
+              pattern= "^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+              required
+              >
+            </div>
+          </div>
+          <div class="invalid-feedback d-block">
+            <div *ngIf="userEmail?.errors?.required && userEmail.touched">Email is required</div>
+            <div *ngIf="userEmail?.errors?.pattern && userEmail.touched">Invalid email</div>
+          </div>
+
+          <!-- Password field -->
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input 
+            type="password" 
+            class="form-control" 
+            [(ngModel)]="password"
+            name="password"
+            required>
+          </div>
+
+          <input type="submit" value="Submit" class="btn btn-primary btn-block">
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
