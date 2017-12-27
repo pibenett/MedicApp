@@ -6,9 +6,8 @@ import { SharedModule } from 'shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { AngularMultiSelectModule } from 'angular2-multiselect-checkbox-dropdown/angular2-multiselect-dropdown';
 
-
 import { FollowupDetailsComponent } from 'app/patients/components/followup-details/followup-details.component';
-import { FollowupFormComponent } from 'shared/components/followup-form/followup-form.component';
+import { FollowupFormComponent } from 'app/patients/components/followup-form/followup-form.component';
 import { PatientDetailsComponent } from 'app/patients/components/patient-details/patient-details.component';
 import { PatientFollowupComponent } from 'app/patients/components/patient-followup/patient-followup.component';
 import { PatientFormComponent } from 'app/patients/components/patient-form/patient-form.component';
